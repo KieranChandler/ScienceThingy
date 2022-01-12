@@ -3,10 +3,16 @@ extern crate glium;
 use glium::glutin;
 use glium::Surface;
 use glium::glutin::event::VirtualKeyCode;
+use glium::backend::glutin::glutin::dpi::PhysicalPosition;
+
 
 // fn input_handler(input: glutin::event::KeyboardInput) {
 fn input_handler() {
     println!("Input!");
+}
+
+fn update_cursor_pos(cursor_x: f64, cursor_y: f64) {
+    println!("Mouse: {}, {}", cursor_x, cursor_y);
 }
 
 fn main() {
@@ -29,7 +35,7 @@ fn main() {
                 glutin::event::WindowEvent::CloseRequested => {
                     *control_flow = glutin::event_loop::ControlFlow::Exit;
                     return;
-                }
+                },
                 glutin::event::WindowEvent::KeyboardInput {
                     input:
                         glutin::event::KeyboardInput {
@@ -42,6 +48,9 @@ fn main() {
                     return;
                 },
                 glutin::event::WindowEvent::KeyboardInput {..} => input_handler(),
+                glutin::event::WindowEvent::CursorMoved {
+                    position: PhysicalPosition { x, y }, ..
+                } => update_cursor_pos(x,y),
                 _ => (),
             },
             _ => (),
