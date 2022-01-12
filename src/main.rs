@@ -7,6 +7,9 @@ use glium::glutin::event::ElementState;
 use glium::glutin::event::MouseButton;
 use glium::backend::glutin::glutin::dpi::PhysicalPosition;
 
+pub mod sphere;
+pub mod errors;
+
 fn input_handler() {
     println!("Input!");
 }
@@ -51,7 +54,7 @@ fn main() {
         &display, vertex_shader_src, fragment_shader_src, None).unwrap();
 
     // code for drawing sphere
-    let sphere = glium_shapes::sphere::SphereBuilder::new()
+    let sphere = sphere::SphereBuilder::new()
         .translate(0.0, 0.5, 0.0)
         .scale(2.0, 3.0, 4.0)
         .build(&display);
@@ -60,9 +63,8 @@ fn main() {
         let mut target = display.draw();
         target.clear_color(0.0, 0.0, 1.0, 1.0);
         target.finish().unwrap();
-        let (vertices, indices) = sphere.indices_and_vertices(&display);
-        target.draw(&vertices, &indices, &program,
-                   &glium::uniforms::EmptyUniforms, &Default::default()).unwrap();
+        // target.draw(&sphere, &sphere, &program,
+        //            &glium::uniforms::EmptyUniforms, &Default::default()).unwrap();
 
         let next_frame_time = std::time::Instant::now()
             + std::time::Duration::from_nanos(16_666_667);
