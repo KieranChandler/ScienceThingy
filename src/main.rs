@@ -4,8 +4,9 @@ use glium::glutin;
 use glium::Surface;
 use glium::glutin::event::VirtualKeyCode;
 
-fn input_handler(input: glutin::event::KeyboardInput) {
-    println!("Input! {}",input);
+// fn input_handler(input: glutin::event::KeyboardInput) {
+fn input_handler() {
+    println!("Input!");
 }
 
 fn main() {
@@ -40,7 +41,7 @@ fn main() {
                     *control_flow = glutin::event_loop::ControlFlow::Exit;
                     return;
                 },
-                event => input_handler(event.input),
+                glutin::event::WindowEvent::KeyboardInput {..} => input_handler(),
                 _ => (),
             },
             _ => (),
