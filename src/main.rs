@@ -20,9 +20,6 @@ fn left_click(cursor_pos: (f64, f64)) {
     println!("Mouseclick @: {}, {}", cursor_x, cursor_y);
 }
 
-fn frame() {
-}
-
 fn main() {
     let event_loop = glutin::event_loop::EventLoop::new();
     let wb = glutin::window::WindowBuilder::new();
@@ -30,11 +27,42 @@ fn main() {
     let display = glium::Display::new(wb, cb, &event_loop).unwrap();
     let mut cursor_pos: (f64, f64) = (0.0, 0.0);
 
+    // code for drawing shader
+    let vertex_shader_src = r#"
+        #version 140
+    
+        in vec2 position;
+    
+        void main() {
+            gl_Position = vec4(position, 0.0, 1.0);
+        }
+    "#;
+    let fragment_shader_src = r#"
+        #version 140
+
+        out vec4 color;
+
+        void main() {
+            color = vec4(1.0, 0.0, 0.0, 1.0);
+        }
+    "#;
+    
+    let program = glium::Program::from_source(
+        &display, vertex_shader_src, fragment_shader_src, None).unwrap();
+
+    // code for drawing sphere
+    let sphere = glium_shapes::sphere::SphereBuilder::new()
+        .translate(0.0, 0.5, 0.0)
+        .scale(2.0, 3.0, 4.0)
+        .build(&display);
+    
     event_loop.run(move |ev, _, control_flow| {
         let mut target = display.draw();
         target.clear_color(0.0, 0.0, 1.0, 1.0);
         target.finish().unwrap();
-        frame();
+        let (vertices, indices) = sphere.indices_and_vertices(&display);
+        target.draw(&vertices, &indices, &program,
+                   &glium::uniforms::EmptyUniforms, &Default::default()).unwrap();
 
         let next_frame_time = std::time::Instant::now()
             + std::time::Duration::from_nanos(16_666_667);
