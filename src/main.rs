@@ -1,7 +1,9 @@
 extern crate glium;
 
-mod unlit_material;
-mod triangle;
+pub mod unlit_material;
+pub mod triangle;
+pub mod shape;
+pub mod icosphere;
 
 use glium::glutin;
 use glium::glutin::event::VirtualKeyCode;
@@ -26,14 +28,14 @@ fn main() {
     let display = glium::Display::new(wb, cb, &event_loop).unwrap();
     let mut cursor_pos: (f64, f64) = (0.0, 0.0);
 
-    let shape = triangle::generate(&display);
+    let shape = icosphere::generate(&display);
     let program = unlit_material::generate_unlit_material(&display);
 
     event_loop.run(move |ev, _, control_flow| {
         let mut frame = display.draw();
         frame.clear_color(0.0, 0.0, 1.0, 1.0);
 
-        triangle::draw(&mut frame, &shape, &program);
+        shape::draw(&mut frame, &shape, &program);
 
         frame.finish().unwrap();
 
