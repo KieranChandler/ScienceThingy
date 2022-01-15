@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 glium = "*"
+bevy = "*"
+asteroid_simulation = { version = "*", path = "asteroid_simulation" }
