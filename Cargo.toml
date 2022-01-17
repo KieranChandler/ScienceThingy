@@ -1,5 +1,5 @@
 [package]
-name = "rust"
+name = "science"
 version = "0.1.0"
 edition = "2021"
 
@@ -8,4 +8,7 @@ edition = "2021"
 [dependencies]
 glium = "*"
 bevy = "*"
-asteroid_simulation = { version = "*", path = "asteroid_simulation" }
+
+[[bin]]
+name = "asteroids"
+path = "src/asteroids/asteroids.rs"

@@ -9,6 +9,16 @@ pub struct Orbiter
     orbit_pos: f32,
 }
 
+pub fn main() {
+    App::new()
+        .insert_resource(Msaa { samples: 4 })
+        .insert_resource(ClearColor(Color::rgb(0.0, 0.0, 0.0)))
+        .add_plugins(DefaultPlugins)
+        .add_startup_system(setup_asteroid_simulation)
+        .add_system(orbit)
+        .add_system(bevy::input::system::exit_on_esc_system)
+        .run();
+}
 
 pub fn setup_asteroid_simulation(
     mut commands: Commands,
