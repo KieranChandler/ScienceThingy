@@ -8,7 +8,12 @@ edition = "2021"
 [dependencies]
 glium = "*"
 bevy = "*"
+rand = "*"
 
 [[bin]]
 name = "asteroids"
 path = "src/asteroids/asteroids.rs"
+
+[[bin]]
+name = "nuclear"
+path = "src/nuclear/nuclear.rs"
